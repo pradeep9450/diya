@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- soft glow -->
+    <path android:fillColor="#33FFB547" android:pathData="M54,30m-22,0a22,22 0,1 1,44 0a22,22 0,1 1,-44 0" />
+    <!-- flame -->
+    <path android:fillColor="#FFFF8A1F" android:pathData="M54,26C54,26 43,39 43,48.5a11,11 0,0 0,22 0C65,39 54,26 54,26z" />
+    <path android:fillColor="#FFFFD27A" android:pathData="M54,36C54,36 48.5,43 48.5,48.5a5.5,5.5 0,0 0,11 0C59.5,43 54,36 54,36z" />
+    <!-- lamp bowl -->
+    <path android:fillColor="#FFE8721C" android:pathData="M28,61L80,61C78,74 67,83 54,83C41,83 30,74 28,61z" />
+    <path android:fillColor="#FFFFB547" android:pathData="M26,58h56a3,3 0,0 1,0 6h-56a3,3 0,0 1,0 -6z" />
+    <path android:fillColor="#55FFF1C9" android:pathData="M36,68h36c-2,6 -8,10 -18,10s-16,-4 -18,-10z" />
+</vector>

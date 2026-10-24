@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_back"
+            app:tint="@color/text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Diya settings"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView style="@style/SettingsHeader" android:text="About you" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/SettingsField"
+                android:hint="Your name (Diya will call you this)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/SettingsField"
+                android:hint="Home city (for weather)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cityInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/SettingsHeader" android:text="Language" />
+
+            <TextView
+                style="@style/SettingsNote"
+                android:text="Diya always understands English and Hinglish. Choose Hindi if you mostly speak Hindi, so she listens for Hindi. You can also just say “Hindi mein baat karo” or “Speak in English”." />
+
+            <RadioGroup
+                android:id="@+id/languageGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp">
+
+                <RadioButton
+                    android:id="@+id/langEnglish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="English + Hinglish"
+                    android:textColor="@color/text" />
+
+                <RadioButton
+                    android:id="@+id/langHindi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="हिंदी (Hindi)"
+                    android:textColor="@color/text" />
+            </RadioGroup>
+
+            <TextView style="@style/SettingsHeader" android:text="Permissions" />
+
+            <TextView
+                android:id="@+id/permStatus"
+                style="@style/SettingsNote" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/grantButton"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Grant permissions" />
+
+            <TextView
+                style="@style/SettingsNote"
+                android:text="Special access (each opens an Android page — find Diya and switch it on):" />
+
+            <LinearLayout
+                android:id="@+id/accessContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView style="@style/SettingsHeader" android:text="Announcements" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/announceCalls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Say who is calling"
+                android:textColor="@color/text" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/announceMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read new WhatsApp and SMS messages aloud"
+                android:textColor="@color/text" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/SettingsField"
+                android:hint="Country code for WhatsApp numbers (91 = India)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/countryInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/SettingsHeader" android:text="Answers to any question (free)" />
+
+            <TextView
+                style="@style/SettingsNote"
+                android:text="Diya uses Google's free Gemini API for general questions. Create a free key in Google AI Studio (sign in with your Google account, no payment needed) and paste it below." />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/getKeyButton"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Get a free Gemini key" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/SettingsField"
+                android:hint="Gemini API key"
+                app:endIconMode="password_toggle">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/keyInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/SettingsField"
+                android:hint="Gemini model (default: gemini-flash-latest)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/modelInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/SettingsHeader" android:text="Wake word" />
+
+            <TextView
+                style="@style/SettingsNote"
+                android:text="If Diya misses “Hey Diya”, look at the line under the orb on the main screen while you say it. Add whatever it shows here, separated by commas (for example: hey dear, a dia)." />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/SettingsField"
+                android:hint="Extra wake word spellings">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/wakeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/SettingsHeader" android:text="Voice" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/voiceButton"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Diya's voice" />
+
+            <TextView
+                style="@style/SettingsNote"
+                android:text="For Hindi replies, install the Hindi voice here (Google speech engine → Install voice data → Hindi). Without it, Diya reads Hindi in English letters." />
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_margin="8dp"
+        android:text="Save" />
+</LinearLayout>

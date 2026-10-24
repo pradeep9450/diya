@@ -1,0 +1,13 @@
+<resources>
+    <style name="Theme.Diya" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/amber</item>
+        <item name="colorOnPrimary">@color/on_amber</item>
+        <item name="colorSecondary">@color/flame</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/muted</item>
+    </style>
+</resources>

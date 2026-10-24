@@ -1,0 +1,44 @@
+# Builds Diya.apk for free on GitHub every time the code changes.
+# Download it from the repository's "Releases" page on your phone and tap to install.
+name: Build Diya APK
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build the APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon --stacktrace
+          cp app/build/outputs/apk/release/app-release.apk Diya.apk
+
+      - name: Keep a copy with this run
+        uses: actions/upload-artifact@v4
+        with:
+          name: Diya-apk
+          path: Diya.apk
+
+      - name: Publish as a download (Releases page)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Diya build ${{ github.run_number }}
+          body: Open this page on your phone, tap Diya.apk under Assets, then tap the downloaded file to install.
+          files: Diya.apk
+          make_latest: true

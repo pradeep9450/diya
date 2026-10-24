@@ -1,0 +1,12 @@
+<resources>
+    <color name="bg">#FF120C08</color>
+    <color name="surface">#FF1E1510</color>
+    <color name="surface_high">#FF2A1D15</color>
+    <color name="stroke">#FF3D2B1F</color>
+    <color name="amber">#FFFFB547</color>
+    <color name="flame">#FFFF7A1A</color>
+    <color name="on_amber">#FF1A100A</color>
+    <color name="text">#FFF5E9DC</color>
+    <color name="muted">#FFA8968A</color>
+    <color name="launcher_bg">#FF1E120B</color>
+</resources>
