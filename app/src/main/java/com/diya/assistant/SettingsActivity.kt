@@ -75,6 +75,9 @@ class SettingsActivity : AppCompatActivity() {
         b.languageGroup.check(if (prefs.hindi) R.id.langHindi else R.id.langEnglish)
         b.announceCalls.isChecked = prefs.announceCalls
         b.announceMessages.isChecked = prefs.announceMessages
+        b.conversationSwitch.isChecked = prefs.conversationMode
+        b.offlineSwitch.isChecked = prefs.speechEngine == "offline"
+        b.diagnosticsButton.setOnClickListener { startActivity(Intent(this, DiagnosticsActivity::class.java)) }
 
         b.backButton.setOnClickListener { finish() }
         b.getKeyButton.setOnClickListener { open(Intent(Intent.ACTION_VIEW, Uri.parse("https://aistudio.google.com/apikey"))) }
@@ -99,6 +102,8 @@ class SettingsActivity : AppCompatActivity() {
             prefs.language = if (b.languageGroup.checkedRadioButtonId == R.id.langHindi) "hi" else "en"
             prefs.announceCalls = b.announceCalls.isChecked
             prefs.announceMessages = b.announceMessages.isChecked
+            prefs.conversationMode = b.conversationSwitch.isChecked
+            prefs.speechEngine = if (b.offlineSwitch.isChecked) "offline" else "auto"
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
             finish()
         }

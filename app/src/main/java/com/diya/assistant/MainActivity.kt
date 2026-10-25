@@ -60,8 +60,10 @@ class MainActivity : AppCompatActivity() {
 
         b.powerButton.setOnClickListener {
             if (DiyaBus.status.value == Status.OFF) {
+                prefs.wantOn = true
                 withPermissions { DiyaService.send(this, DiyaService.ACTION_START) }
             } else {
+                prefs.wantOn = false
                 DiyaService.send(this, DiyaService.ACTION_STOP)
             }
         }
@@ -97,6 +99,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         DiyaBus.activityVisible = true
+        // Like a smart speaker: Diya turns herself on when you open the app (unless you turned her off).
+        if (prefs.wantOn && hasMic() && DiyaBus.status.value == Status.OFF) {
+            DiyaService.send(this, DiyaService.ACTION_START)
+        }
     }
 
     override fun onPause() {

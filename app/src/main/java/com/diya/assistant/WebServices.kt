@@ -153,6 +153,74 @@ class WebServices {
         return titles
     }
 
+    // ---------- Wikipedia (free, no key) ----------
+
+    data class WikiAnswer(val text: String, val title: String, val inHindi: Boolean)
+
+    /** Short spoken summary of a topic. Hindi Wikipedia when [hindi] and available. */
+    suspend fun wikipedia(topic: String, hindi: Boolean): WikiAnswer? {
+        if (Hindi.hasDevanagari(topic)) {
+            wikiSearch("hi", topic)?.let { t -> wikiSummary("hi", t)?.let { return WikiAnswer(it, t, true) } }
+            return null
+        }
+        val title = wikiSearch("en", topic) ?: return null
+        if (hindi) {
+            hindiTitle(title)?.let { ht -> wikiSummary("hi", ht)?.let { return WikiAnswer(it, ht, true) } }
+        }
+        return wikiSummary("en", title)?.let { WikiAnswer(it, title, false) }
+    }
+
+    private suspend fun wikiSearch(lang: String, q: String): String? {
+        val o = JSONObject(get("https://$lang.wikipedia.org/w/api.php?action=query&list=search&srlimit=3&format=json&utf8=1&srsearch=${enc(q)}"))
+        val arr = o.optJSONObject("query")?.optJSONArray("search") ?: return null
+        for (i in 0 until arr.length()) {
+            val t = arr.getJSONObject(i).optString("title")
+            if (t.isNotBlank() && !t.contains("disambiguation", ignoreCase = true)) return t
+        }
+        return null
+    }
+
+    private suspend fun hindiTitle(enTitle: String): String? = runCatching {
+        val o = JSONObject(get("https://en.wikipedia.org/w/api.php?action=query&prop=langlinks&lllang=hi&format=json&titles=${enc(enTitle)}"))
+        val pages = o.getJSONObject("query").getJSONObject("pages")
+        val page = pages.getJSONObject(pages.keys().next())
+        page.optJSONArray("langlinks")?.optJSONObject(0)?.optString("*")?.ifBlank { null }
+    }.getOrNull()
+
+    private suspend fun wikiSummary(lang: String, title: String): String? {
+        val o = JSONObject(get("https://$lang.wikipedia.org/api/rest_v1/page/summary/${enc(title.replace(' ', '_')).replace("+", "%20")}"))
+        if (o.optString("type") == "disambiguation") return null
+        val extract = o.optString("extract").replace(Regex("\\s*\\([^)]*\\)"), "").trim()
+        if (extract.isBlank()) return null
+        val sentences = extract.split(Regex("(?<=[.!?।])\\s+")).filter { it.isNotBlank() }
+        var out = ""
+        for (sen in sentences) {
+            if (out.isNotEmpty() && out.length + sen.length > 320) break
+            out = if (out.isEmpty()) sen else "$out $sen"
+            if (out.length > 160) break
+        }
+        return out.ifBlank { null }
+    }
+
+    // ---------- Dictionary (dictionaryapi.dev: free, no key) ----------
+
+    suspend fun define(word: String): String? = runCatching {
+        val arr = JSONArray(get("https://api.dictionaryapi.dev/api/v2/entries/en/${enc(word)}"))
+        val meaning = arr.getJSONObject(0).getJSONArray("meanings").getJSONObject(0)
+        val pos = meaning.optString("partOfSpeech")
+        val def = meaning.getJSONArray("definitions").getJSONObject(0).optString("definition")
+        if (def.isBlank()) null else "$word, $pos: $def"
+    }.getOrNull()
+
+    // ---------- Currency (open.er-api.com: free, no key) ----------
+
+    suspend fun convertCurrency(amount: Double, from: String, to: String): Double? {
+        val o = JSONObject(get("https://open.er-api.com/v6/latest/$from"))
+        if (o.optString("result") != "success") return null
+        val rate = o.getJSONObject("rates").optDouble(to, Double.NaN)
+        return if (rate.isNaN()) null else amount * rate
+    }
+
     // ---------- Gemini (free tier with an API key from Google AI Studio) ----------
 
     suspend fun gemini(
@@ -220,7 +288,7 @@ class WebServices {
             val c = URL(url).openConnection() as HttpURLConnection
             c.connectTimeout = 10_000
             c.readTimeout = 30_000
-            c.setRequestProperty("User-Agent", "Diya/1.0 (Android)")
+            c.setRequestProperty("User-Agent", "Diya/2.0 (personal Android voice assistant)")
             headers.forEach { (k, v) -> c.setRequestProperty(k, v) }
             try {
                 if (json != null) {

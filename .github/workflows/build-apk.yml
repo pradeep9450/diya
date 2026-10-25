@@ -27,6 +27,14 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      - name: Pack the offline wake-word model into the app
+        run: |
+          curl -sSL --retry 3 -o model.zip https://alphacephei.com/vosk/models/vosk-model-small-en-in-0.4.zip
+          unzip -q model.zip -d /tmp/model
+          rm -rf app/src/main/assets/model-en-in
+          mv /tmp/model/vosk-model-small-en-in-0.4 app/src/main/assets/model-en-in
+          du -sh app/src/main/assets/model-en-in
+
       - name: Build the APK
         run: |
           chmod +x gradlew

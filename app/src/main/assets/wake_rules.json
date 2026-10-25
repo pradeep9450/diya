@@ -1,7 +1,23 @@
 {
-  "about": "Hey Diya wake word rules, tuned with ci/wake_test.py. Step 1 'grammar': what the fast detector listens for (the offline model hears Diya as dear/deer/dia). Step 2: the last seconds are re-decoded with full vocabulary; Diya wakes only if that text matches 'confirm' and not 'block'.",
-  "grammar": ["hey deer", "hi deer", "hey dia", "hi dia", "hey dear", "hi dear", "hey the ya", "hey d ya", "hey dee ya", "hey di ya", "hi d ya", "hi dee ya", "hi the ya", "hey ya", "hi ya"],
-  "confirm": "\\b(hey|hi|he|hay|he'd)\\s+(the\\s+)?(dear|deer|dia|diya|idea|here|beer|cheer|we're|off)\\b|^(hey|hi|he|dear|hey the)$|\\bhaider\\b",
+  "about": "Hey Diya wake word rules, tuned with ci/wake_test.py. Step 1 'grammar': what the fast detector listens for (the offline model hears Diya as dear/deer/dia). Step 2: the last seconds are re-decoded with full vocabulary; Diya wakes only if that text matches 'confirm' and not 'block'. The last 'confirm' part allows one-breath commands (Hey Diya what's the time).",
+  "grammar": [
+    "hey deer",
+    "hi deer",
+    "hey dia",
+    "hi dia",
+    "hey dear",
+    "hi dear",
+    "hey the ya",
+    "hey d ya",
+    "hey dee ya",
+    "hey di ya",
+    "hi d ya",
+    "hi dee ya",
+    "hi the ya",
+    "hey ya",
+    "hi ya"
+  ],
+  "confirm": "\\b(hey|hi|he|hay|he'd)\\s+(the\\s+)?(dear|deer|dia|diya|idea|here|beer|cheer|we're|off)\\b|^(hey|hi|he|dear|hey the)$|\\bhaider\\b|^(hey|hi|he|hay)\\s+(what's the (time|weather|date)|what is the (time|weather)|set (a|an|the)|play|call|open|turn (on|off)|remind|kal|aaj|carl|kyle)\\b",
   "block": "\\b(hey|hi|hay|he)\\s+(there|did|dude|daddy|dad|siri|google|go|alexa|cortana|bixby|prior|priya|riya|dinesh|diana|guys|man|buddy|bro|you|your|yaar|yeah)\\b",
   "verifyDelayMs": 350,
   "verifySeconds": 2.5

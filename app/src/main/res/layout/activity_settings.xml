@@ -117,7 +117,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            <TextView style="@style/SettingsHeader" android:text="Announcements" />
+            <TextView style="@style/SettingsHeader" android:text="Listening &amp; announcements" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/conversationSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Conversation mode: keep listening after replies (no need to say Hey Diya again)"
+                android:textColor="@color/text" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/offlineSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Offline listening only (no internet needed, English works best)"
+                android:textColor="@color/text" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/announceCalls"
@@ -194,6 +209,16 @@
                     android:layout_height="wrap_content"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView style="@style/SettingsHeader" android:text="Help" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/diagnosticsButton"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Diagnostics" />
 
             <TextView style="@style/SettingsHeader" android:text="Voice" />
 

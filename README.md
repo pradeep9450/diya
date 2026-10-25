@@ -56,7 +56,8 @@ Every later change builds a new APK the same way, and it installs over the old o
      - *Do Not Disturb control*, *Modify system settings* (brightness).
      - *Unrestricted battery*: so the phone doesn't kill Diya.
    - **Change Diya's voice → Install voice data → Hindi**, so Hindi replies sound natural.
-4. Say **"Hey Diya"**, wait for the chime, and speak. Or say it in one go: *"Hey Diya, kitne baje hain?"*
+4. Say **"Hey Diya"**, wait for the beep, and speak. Short English commands also work in one breath: *"Hey Diya, what's the time?"*
+5. After Diya answers she keeps listening for a few seconds (**conversation mode**), so you can just carry on talking. Say "thank you" or "stop" to end, or stay quiet.
 
 > **"Restricted setting" message?** Android 13+ blocks notification access for apps installed from a file. Open Android **Settings → Apps → Diya → ⋮ (top right) → Allow restricted settings**, then try again.
 
@@ -94,6 +95,22 @@ Diya replies in English when you speak English, and in Hindi when you speak Hind
 
 ---
 
+## Chat with Diya (free, even without a key)
+
+- **Maths:** "What is 25 times 4?", "15 percent of 2000", "25 guna 4 kitna hota hai"
+- **Conversions:** "5 km in miles", "100 Fahrenheit to Celsius", "100 dollars in rupees"
+- **Fun:** "Tell me a joke" / "Ek joke sunao", "Tell me a fun fact", "Motivate me", "Flip a coin", "Roll a dice"
+- **Questions:** "Who is Sachin Tendulkar?", "Taj Mahal ke bare mein batao", "Meaning of serendipity". Answered from Wikipedia and a free dictionary.
+- **Anything else** ("Explain black holes simply", advice, stories): add the free Gemini key in Settings for full chatbot answers.
+
+## If something doesn't work
+
+Open **Settings → Diagnostics**, tap **Copy**, and paste it to Claude. It shows what Diya heard, any errors, and which permissions are missing.
+
+- **"Hey Diya" not waking her:** speak normally, about an arm's length away, and pause slightly after "Diya". The grey line under the orb shows what she heard.
+- **Speech errors or network trouble:** Diya now switches to offline listening by herself. You can also turn on *Settings → Offline listening only*.
+- **Diya stops after a while:** allow *Unrestricted battery* in Settings → Special access. On Xiaomi, Vivo, Oppo and Realme, also enable *Autostart* for Diya.
+
 ## Good to know
 
 - **WhatsApp sending:**
@@ -105,12 +122,14 @@ Diya replies in English when you speak English, and in Hindi when you speak Hind
   - "Remind me in 10 minutes" uses a labelled timer instead.
 - **Incoming calls:** Diya says who is calling. You can say "Hey Diya, answer the call". She pauses listening during calls.
 - **Notification:** Android requires a visible notification while Diya listens. It has *Talk* and *Turn off* buttons.
-- **After restarting the phone:** open Diya and tap *Turn on Diya* again. Android doesn't allow microphone apps to start themselves.
+- **After restarting the phone:** just open Diya once and she turns herself on. Android doesn't let microphone apps start completely by themselves.
 - **Gemini free tier:**
   - It has daily limits, which are plenty for one person.
   - Google may use free-tier questions to improve its products, so don't ask it anything private.
   - All the built-in commands above work without Gemini.
-- **Wake word tuning:** the grey line under the orb shows what the wake-word engine heard. If "Hey Diya" shows up as something else, add that text in *Settings → Extra wake word spellings*.
+- **Wake word:**
+  - It works offline. The model is built into the app and was tuned and tested with synthetic voices (`ci/wake_test.py`).
+  - "Hi dear" and "Hey Riya" sound identical to the offline model, so they may wake her too.
 
 ## Making Diya smarter
 

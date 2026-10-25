@@ -51,6 +51,21 @@ class Prefs(context: Context) {
         get() = sp.getBoolean("announce_calls", true)
         set(v) = sp.edit().putBoolean("announce_calls", v).apply()
 
+    /** Keep listening after Diya replies, so you can carry on without "Hey Diya" (like Alexa follow-up). */
+    var conversationMode: Boolean
+        get() = sp.getBoolean("conversation_mode", true)
+        set(v) = sp.edit().putBoolean("conversation_mode", v).apply()
+
+    /** Turn Diya on automatically when the app is opened (remembers if you turned her off). */
+    var wantOn: Boolean
+        get() = sp.getBoolean("want_on", true)
+        set(v) = sp.edit().putBoolean("want_on", v).apply()
+
+    /** "auto" = phone's recognizer with offline backup, "offline" = always offline (no internet needed). */
+    var speechEngine: String
+        get() = sp.getString("speech_engine", "auto").orEmpty().ifBlank { "auto" }
+        set(v) = sp.edit().putString("speech_engine", v).apply()
+
     var askedOptionalPermissions: Boolean
         get() = sp.getBoolean("asked_optional", false)
         set(v) = sp.edit().putBoolean("asked_optional", v).apply()

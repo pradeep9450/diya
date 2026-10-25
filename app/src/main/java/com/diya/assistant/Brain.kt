@@ -19,6 +19,8 @@ data class Reply(
     val speech: String,
     val followUp: Boolean = false,
     val afterSpeech: (() -> Unit)? = null,
+    /** Don't keep listening afterwards (you said stop / thanks / bye). */
+    val endConversation: Boolean = false,
 )
 
 /**
@@ -63,16 +65,16 @@ class Brain(context: Context, private val prefs: Prefs) {
         if (waitingConfirm != null) {
             when (u.cmd) {
                 Cmd.Yes -> return waitingConfirm()
-                Cmd.No, Cmd.Stop -> return Reply(r("Okay, cancelled.", "ठीक है, रद्द कर दिया।"))
+                Cmd.No, Cmd.Stop -> return Reply(r("Okay, cancelled.", "ठीक है, रद्द कर दिया।"), endConversation = true)
                 else -> Unit
             }
         }
         if (waiting != null) {
-            if (u.cmd == Cmd.Stop || u.cmd == Cmd.No) return Reply(r("Okay.", "ठीक है।"))
+            if (u.cmd == Cmd.Stop || u.cmd == Cmd.No) return Reply(r("Okay.", "ठीक है।"), endConversation = true)
             resume(waiting, u, raw)?.let { return it }
         }
         if (u.text.isBlank()) return Reply(r("Yes?", "जी, बोलिए?"), followUp = true)
-        val cmd = u.cmd ?: return askGemini(raw.trim())
+        val cmd = u.cmd ?: return chat(raw.trim(), Text.normalize(raw))
         return perform(cmd)
     }
 
@@ -109,7 +111,7 @@ class Brain(context: Context, private val prefs: Prefs) {
     // ---------------- Carrying out commands ----------------
 
     private suspend fun perform(cmd: Cmd): Reply = when (cmd) {
-        Cmd.Stop -> Reply("")
+        Cmd.Stop -> Reply("", endConversation = true)
         Cmd.Yes, Cmd.No -> Reply(r("Okay.", "ठीक है।"))
         is Cmd.SetLanguage -> {
             prefs.language = if (cmd.hindi) "hi" else "en"
@@ -120,7 +122,7 @@ class Brain(context: Context, private val prefs: Prefs) {
             )
         }
         Cmd.Greet -> Reply(r("${greeting()}${you()}! How can I help?", "नमस्ते${you()}! बताइए, मैं क्या मदद करूँ?"))
-        Cmd.Thanks -> Reply(r("You're welcome${you()}!", "आपका स्वागत है${you()}!"))
+        Cmd.Thanks -> Reply(r("You're welcome${you()}!", "आपका स्वागत है${you()}!"), endConversation = true)
         Cmd.WhoAreYou -> Reply(
             r(
                 "I'm Diya, your personal assistant. Diya means a little lamp, and I'm here to light things up for you.",
@@ -565,18 +567,71 @@ class Brain(context: Context, private val prefs: Prefs) {
         return launched(phone.launch(intent, "open $label"), r("Opening $label.", "$label खोल रही हूँ।"), "open $label", "$label खोलने")
     }
 
+    // ---------------- Chatbot ----------------
+
+    /**
+     * Anything that isn't a phone command. Easy questions are answered instantly offline;
+     * the rest goes to Gemini (free key) or, without a key, to Wikipedia and friends.
+     */
+    private suspend fun chat(question: String, norm: String): Reply {
+        Knowledge.local(norm, hindi)?.let { return Reply(it, endConversation = isGoodbye(norm)) }
+        val lookup = Knowledge.lookup(norm)
+        if (lookup is Knowledge.Lookup.Currency) return currency(lookup)
+        if (prefs.geminiKey.isNotBlank()) {
+            val g = askGemini(question)
+            if (g != null) return g
+            // Gemini failed (limit reached / offline): try the free sources instead.
+            if (lookup != null) answerLookup(lookup)?.let { return it }
+            return Reply(r("I couldn't get an answer right now. Please try again in a bit.", "अभी जवाब नहीं मिल पाया। थोड़ी देर में फिर पूछिए।"))
+        }
+        val target = lookup ?: guessTopic(norm)?.let { Knowledge.Lookup.Wiki(it) }
+        if (target != null) answerLookup(target)?.let { return it }
+        return Reply(
+            r(
+                "I don't know that one yet. Add the free Gemini key in my settings and I can chat about anything.",
+                "यह मुझे अभी नहीं पता। मेरी सेटिंग में Gemini की फ़्री key डाल दीजिए, फिर मैं किसी भी बारे में बात कर पाऊँगी।"
+            )
+        )
+    }
+
+    private fun isGoodbye(t: String) = Regex("^(bye|goodbye|bye bye|see you|tata|alvida|chalo bye|good night|gn|shubh ratri)( diya)?$").matches(t)
+
+    /** Without a key, a question like "why is the sky blue" is looked up as a topic. */
+    private fun guessTopic(t: String): String? {
+        if (!Regex("^(what|why|how|who|when|where|which|kya|kyu|kyon|kaise|kaun|kab|kahan)\\b").containsMatchIn(t)) return null
+        val topic = t.replace(Regex("^(what|why|how|who|when|where|which)( is| are| was| were| does| do| did)?( the| a| an)?\\s+"), "").trim()
+        return topic.takeIf { it.split(" ").size in 1..8 }
+    }
+
+    private suspend fun answerLookup(l: Knowledge.Lookup): Reply? = try {
+        when (l) {
+            is Knowledge.Lookup.Wiki -> web.wikipedia(l.topic, hindi)?.let { Reply(it.text) }
+            is Knowledge.Lookup.Define -> web.define(l.word)?.let {
+                Reply(r("Here's the meaning. $it", "${l.word} का मतलब: $it"))
+            }
+            is Knowledge.Lookup.Currency -> currency(l)
+        }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        DiyaLog.add("chat", "lookup failed: ${e.javaClass.simpleName} ${e.message}")
+        null
+    }
+
+    private suspend fun currency(c: Knowledge.Lookup.Currency): Reply = net {
+        val v = web.convertCurrency(c.amount, c.from, c.to)
+        if (v == null) r("I couldn't get that exchange rate right now.", "अभी वह रेट नहीं मिल पाया।")
+        else r(
+            "${Knowledge.fmt(c.amount)} ${c.from} is about ${Knowledge.fmt(v)} ${c.to}.",
+            "${Knowledge.fmt(c.amount)} ${c.from} लगभग ${Knowledge.fmt(v)} ${c.to} के बराबर है।"
+        )
+    }
+
     // ---------------- Gemini ----------------
 
-    private suspend fun askGemini(question: String): Reply {
+    /** Null when Gemini couldn't answer (limit, network), so the caller can fall back. */
+    private suspend fun askGemini(question: String): Reply? {
         val key = prefs.geminiKey
-        if (key.isBlank()) {
-            return Reply(
-                r(
-                    "I can't answer that yet. Add your free Gemini key in my settings and I'll be able to help with questions like that.",
-                    "इसका जवाब देने के लिए मुझे Gemini की फ़्री key चाहिए। मेरी सेटिंग में key डाल दीजिए, फिर मैं ऐसे सवालों में भी मदद कर पाऊँगी।"
-                )
-            )
-        }
         return try {
             val raw = web.gemini(key, prefs.geminiModel, systemPrompt(), history.toList(), question)
             geminiAction(raw)?.let { cmd -> return perform(cmd) }
@@ -587,17 +642,19 @@ class Brain(context: Context, private val prefs: Prefs) {
         } catch (e: CancellationException) {
             throw e
         } catch (e: HttpException) {
-            Reply(
-                when {
-                    e.code == 429 -> r("I've reached my free question limit for the moment. Please try again in a little while.", "अभी के लिए मेरी फ़्री सवालों की सीमा पूरी हो गई है। थोड़ी देर बाद फिर पूछिए।")
-                    e.code == 401 || e.code == 403 || e.body.contains("API key", ignoreCase = true) ->
-                        r("My Gemini key doesn't seem to work. Please check it in settings.", "मेरी Gemini key काम नहीं कर रही। कृपया सेटिंग में जाँच लीजिए।")
-                    e.code == 404 -> r("The Gemini model name in my settings isn't available. Try gemini-flash-latest.", "सेटिंग में लिखा Gemini मॉडल उपलब्ध नहीं है। gemini-flash-latest आज़माइए।")
-                    else -> r("Gemini returned an error, code ${e.code}. Please try again.", "Gemini से गड़बड़ी आई, कोड ${e.code}। फिर से कोशिश कीजिए।")
-                }
-            )
+            DiyaLog.add("gemini", "HTTP ${e.code}: ${e.body.take(160)}")
+            when {
+                e.code == 401 || e.code == 403 || (e.code == 400 && e.body.contains("API key", ignoreCase = true)) ->
+                    Reply(r("My Gemini key doesn't seem to work. Please check it in settings.", "मेरी Gemini key काम नहीं कर रही। कृपया सेटिंग में जाँच लीजिए।"))
+                e.code == 404 -> Reply(r("The Gemini model name in my settings isn't available. Try gemini-flash-latest.", "सेटिंग में लिखा Gemini मॉडल उपलब्ध नहीं है। gemini-flash-latest आज़माइए।"))
+                else -> null // 429 limit, 5xx: fall back to free sources
+            }
         } catch (e: IOException) {
-            Reply(r("I can't reach the internet right now. Please check your connection.", "अभी इंटरनेट नहीं मिल रहा। कृपया कनेक्शन जाँच लीजिए।"))
+            DiyaLog.add("gemini", "network: ${e.javaClass.simpleName} ${e.message}")
+            null
+        } catch (e: Exception) {
+            DiyaLog.add("gemini", "error: ${e.javaClass.simpleName} ${e.message}")
+            null
         }
     }
 
@@ -642,7 +699,8 @@ class Brain(context: Context, private val prefs: Prefs) {
         val who = prefs.userName.ifBlank { "the user" }
         val city = prefs.city.ifBlank { "unknown" }
         return """
-            You are Diya, a warm and friendly female voice assistant on $who's Android phone in India.
+            You are Diya, a warm, cheerful and friendly female voice assistant and chat companion on $who's Android phone in India.
+            You happily chat, answer questions, explain things simply, tell jokes and give advice.
             Everything you write is read aloud by text-to-speech, so:
             - Answer in one to three short sentences unless the user asks for more detail.
             - Never use markdown, bullet points, lists, emojis, tables or links.
@@ -704,8 +762,13 @@ class Brain(context: Context, private val prefs: Prefs) {
         Reply(block())
     } catch (e: CancellationException) {
         throw e
-    } catch (e: Exception) {
+    } catch (e: IOException) {
+        DiyaLog.add("net", "${e.javaClass.simpleName}: ${e.message}")
         Reply(r("I can't reach the internet right now. Please check your connection.", "अभी इंटरनेट नहीं मिल रहा। कृपया कनेक्शन जाँच लीजिए।"))
+    } catch (e: Exception) {
+        // Not a network problem (e.g. a service changed its format): say so honestly.
+        DiyaLog.add("net", "unexpected ${e.javaClass.simpleName}: ${e.message}")
+        Reply(r("Sorry, I couldn't get that information right now.", "माफ़ कीजिए, अभी वह जानकारी नहीं मिल पाई।"))
     }
 
     // Spoken times and dates

@@ -11,41 +11,69 @@ import java.net.URL
 import java.util.zip.ZipInputStream
 
 /**
- * Downloads the free offline Vosk model (Indian English, about 36 MB) the first
- * time Diya starts. After that the wake word works with no internet at all.
+ * Prepares the free offline Vosk model (Indian English) used for "Hey Diya" and
+ * for offline speech recognition. The GitHub build packs the model inside the APK,
+ * so it works on first launch without internet. Builds without it download it once.
  */
 object VoskModelManager {
     private const val MODEL_URL = "https://alphacephei.com/vosk/models/vosk-model-small-en-in-0.4.zip"
+    private const val ASSET_DIR = "model-en-in"
+    private const val VERSION = "en-in-0.4"
 
-    suspend fun ensureModel(context: Context, onProgress: (Int) -> Unit): File = withContext(Dispatchers.IO) {
+    fun hasBundledModel(context: Context): Boolean =
+        runCatching { context.assets.list(ASSET_DIR)?.isNotEmpty() == true }.getOrDefault(false)
+
+    suspend fun ensureModel(context: Context, onProgress: (String) -> Unit): File = withContext(Dispatchers.IO) {
         val root = File(context.filesDir, "vosk")
         val marker = File(root, ".ready")
-        if (marker.exists()) {
+        if (marker.exists() && marker.readText() == VERSION) {
             findModelDir(root)?.let { return@withContext it }
         }
         root.deleteRecursively()
         root.mkdirs()
-        val zip = File(context.cacheDir, "vosk-model.zip")
-        try {
-            download(MODEL_URL, zip, onProgress)
-            unzip(zip, root)
-        } finally {
-            zip.delete()
+        if (hasBundledModel(context)) {
+            onProgress("First-time setup: unpacking the wake-word model…")
+            copyAssets(context, ASSET_DIR, File(root, "model"))
+            DiyaLog.add("model", "unpacked bundled model")
+        } else {
+            val zip = File(context.cacheDir, "vosk-model.zip")
+            try {
+                download(MODEL_URL, zip) { pct -> onProgress("First-time setup: downloading the wake-word model… $pct%") }
+                unzip(zip, root)
+            } finally {
+                zip.delete()
+            }
+            DiyaLog.add("model", "downloaded model")
         }
-        val dir = findModelDir(root) ?: throw IOException("the downloaded model looks incomplete")
-        marker.createNewFile()
+        val dir = findModelDir(root) ?: throw IOException("the wake-word model looks incomplete")
+        marker.writeText(VERSION)
         dir
     }
 
     private fun findModelDir(root: File): File? {
         if (File(root, "am").isDirectory) return root
-        return root.listFiles()?.firstOrNull { it.isDirectory && File(it, "am").isDirectory }
+        root.listFiles()?.forEach { d ->
+            if (d.isDirectory && File(d, "am").isDirectory) return d
+            d.listFiles()?.firstOrNull { it.isDirectory && File(it, "am").isDirectory }?.let { return it }
+        }
+        return null
+    }
+
+    private fun copyAssets(context: Context, path: String, dest: File) {
+        val children = context.assets.list(path).orEmpty()
+        if (children.isEmpty()) {
+            dest.parentFile?.mkdirs()
+            context.assets.open(path).use { input -> FileOutputStream(dest).use { input.copyTo(it) } }
+            return
+        }
+        dest.mkdirs()
+        for (c in children) copyAssets(context, "$path/$c", File(dest, c))
     }
 
     private fun download(url: String, target: File, onProgress: (Int) -> Unit) {
         val conn = URL(url).openConnection() as HttpURLConnection
         conn.connectTimeout = 15_000
-        conn.readTimeout = 30_000
+        conn.readTimeout = 60_000
         try {
             if (conn.responseCode !in 200..299) throw IOException("download failed (HTTP ${conn.responseCode})")
             val total = conn.contentLengthLong
