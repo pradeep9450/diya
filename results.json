@@ -1,0 +1,5223 @@
+{
+ "summary": {
+  "human_voices_positive": "84/92",
+  "human_voices_false": "7/168",
+  "robot_voice_positive": "0/7",
+  "streams": [
+   {
+    "voice": "gtts-in",
+    "seconds": 38,
+    "false_wakes": 0,
+    "vetoed": 8
+   },
+   {
+    "voice": "gtts-us",
+    "seconds": 35,
+    "false_wakes": 0,
+    "vetoed": 8
+   },
+   {
+    "voice": "gtts-hi",
+    "seconds": 13,
+    "false_wakes": 0,
+    "vetoed": 1
+   }
+  ]
+ },
+ "rules": {
+  "about": "Hey Diya wake word rules, tuned with ci/wake_test.py. Step 1 'grammar': what the fast detector listens for (the offline model hears Diya as dear/deer/dia). Step 2: the last seconds are re-decoded with full vocabulary; Diya wakes only if that text matches 'confirm' and not 'block'. The last 'confirm' part allows one-breath commands (Hey Diya what's the time).",
+  "grammar": [
+   "hey deer",
+   "hi deer",
+   "hey dia",
+   "hi dia",
+   "hey dear",
+   "hi dear",
+   "hey the ya",
+   "hey d ya",
+   "hey dee ya",
+   "hey di ya",
+   "hi d ya",
+   "hi dee ya",
+   "hi the ya",
+   "hey ya",
+   "hi ya"
+  ],
+  "confirm": "\\b(hey|hi|he|hay|he'd)\\s+(the\\s+)?(dear|deer|dia|diya|idea|here|beer|cheer|we're|off)\\b|^(hey|hi|he|dear|hey the)$|\\bhaider\\b|^(hey|hi|he|hay)\\s+(what's the (time|weather|date)|what is the (time|weather)|set (a|an|the)|play|call|open|turn (on|off)|remind|kal|aaj|carl|kyle)\\b",
+  "block": "\\b(hey|hi|hay|he)\\s+(there|did|dude|daddy|dad|siri|google|go|alexa|cortana|bixby|prior|priya|riya|dinesh|diana|guys|man|buddy|bro|you|your|yaar|yeah)\\b",
+  "verifyDelayMs": 350,
+  "verifySeconds": 2.5
+ },
+ "cases": [
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey the ya",
+     "check": "hey the here",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey the ya",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "he dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey d ya",
+     "check": "he'd here",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hey",
+    "hey d ya"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi deer",
+     "check": "he dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "easier",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hey the",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey what's that",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer",
+    "dia"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "he set a time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey the ya",
+     "check": "he said",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the ya",
+    "dia"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "haider set a time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "he set a time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.2,
+     "cand": "hey deer",
+     "check": "oh dear",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey deer",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey carl car mossad",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey d ya",
+     "check": "hey carl com",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey d ya"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "haider cull car monster",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "gallagher mosley",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey di ya",
+     "check": "hey there how are you",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di",
+    "hey di ya",
+    "hey di",
+    "ya"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey the ya",
+     "check": "hey there how are you",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey the ya",
+    "ya"
+   ]
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "which is the idea",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "which is the idea",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hello dear friend",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "d ya"
+   ]
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey di ya",
+     "check": "hey did you eat",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di",
+    "hey di ya"
+   ]
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey the ya",
+     "check": "he did you eat",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the ya"
+   ]
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "d ya",
+    "dia",
+    "di",
+    "di deer",
+    "dee di deer"
+   ]
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dia",
+    "di",
+    "di deer"
+   ]
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey di ya",
+     "check": "hey siri",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di ya"
+   ]
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya"
+   ]
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya"
+   ]
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "ya",
+    "hi"
+   ]
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the",
+    "the ya",
+    "the dia"
+   ]
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the",
+    "the ya",
+    "the"
+   ]
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "hi"
+   ]
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey prior",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey prior",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey the ya",
+     "check": "here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the ya"
+   ]
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey the ya",
+     "check": "hey here",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey the ya"
+   ]
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey di ya",
+     "check": "hey diminish",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di ya",
+    "hey di"
+   ]
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey di ya",
+     "check": "hey the image",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di ya"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hey dude what",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hey dude what",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia",
+    "hey d ya"
+   ]
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hey daddy come",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia",
+    "hi",
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hey daddy",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia",
+    "ya",
+    "deer"
+   ]
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear how was your",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer",
+    "the",
+    "the ya",
+    "the"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear how was your",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer",
+    "the",
+    "the ya",
+    "the"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey ya",
+     "check": "hey your list",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey ya",
+     "check": "hey your list",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "d ya",
+    "deer",
+    "hi"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "d ya",
+    "dee ya"
+   ]
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "ya"
+   ]
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "ya"
+   ]
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey hey di ya",
+     "check": "hey who is there",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey hey di",
+    "hey hey di ya"
+   ]
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "gtts-in",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey di ya",
+     "check": "hey who's there",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di",
+    "hey di ya"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey dear what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're set a timer",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear several times",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey we're set a timer",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're set a timer",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey d ya",
+     "check": "hey here",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey d ya"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're cool calm",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer",
+    "hey deer hey"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're hell can't",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey we're cool calm",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer",
+    "hey deer hey"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're hell com",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer",
+    "hey deer hey"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey the ya",
+     "check": "hey there how are you",
+     "wake": false
+    },
+    {
+     "t": 2.7,
+     "cand": "hey ya",
+     "check": "hey there how are you",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey the",
+    "hey the ya",
+    "hey dia",
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey the ya",
+     "check": "hey there how are you",
+     "wake": false
+    },
+    {
+     "t": 2.7,
+     "cand": "hey ya",
+     "check": "hey there how are you",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey the",
+    "hey the ya",
+    "hey dia",
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "where is the idea",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "the",
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "where is the idea",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di",
+    "hey"
+   ]
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey",
+    "the ya",
+    "dia"
+   ]
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey d ya",
+     "check": "hey did you eat",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dee",
+    "hey d ya",
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey did you eat",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer hey",
+    "deer"
+   ]
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey",
+    "deer"
+   ]
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hi deer",
+     "check": "give me a good idea",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "dia",
+    "hi",
+    "hi deer",
+    "di deer"
+   ]
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dia",
+    "deer"
+   ]
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the",
+    "deer",
+    "the deer",
+    "hi"
+   ]
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "hi"
+   ]
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the",
+    "the ya",
+    "the dia"
+   ]
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey prior",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey prior",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey d ya",
+     "check": "hey dinners",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey d ya"
+   ]
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey di ya",
+     "check": "haiti nash",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di ya"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hey dude what's up",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hey what's up",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia"
+   ]
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer d ya",
+     "check": "hey daddy come here",
+     "wake": false
+    },
+    {
+     "t": 3.2,
+     "cand": "hey deer",
+     "check": "daddy come here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer d ya",
+    "hey deer dee",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer the ya",
+     "check": "hey daddy come here",
+     "wake": false
+    },
+    {
+     "t": 3.2,
+     "cand": "hey deer",
+     "check": "daddy come here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer the ya",
+    "hey deer the",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi deer",
+     "check": "hi there how is your day",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer",
+    "hi deer hi",
+    "di",
+    "di ya",
+    "di"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi deer",
+     "check": "hi there how is your day",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi deer",
+    "hi deer hi",
+    "ya",
+    "ya di",
+    "ya di ya",
+    "ya di"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey ya",
+     "check": "hey your visit",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey ya",
+     "check": "hey failure",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "d ya",
+    "deer"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey hi dia",
+     "check": "hey who is there",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey hi",
+    "hey hi dia"
+   ]
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "gtts-us",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey dia",
+     "check": "hey who is there",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear watson",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey what's that",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey idea what's the time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey idea what's the",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're such a time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey dear search",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey we're set a time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're such a time",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey deer",
+     "check": "hey here",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "hey kyle com",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're cool calm",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey di ya",
+     "check": "hey there how you",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey di",
+    "hey di ya",
+    "hey di hey",
+    "ya"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey the ya",
+     "check": "hey there how you",
+     "wake": false
+    },
+    {
+     "t": 3.0,
+     "cand": "hey ya",
+     "check": "hey there how you",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey the",
+    "hey the ya",
+    "hey",
+    "hey ya",
+    "hi"
+   ]
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "deer"
+   ]
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hi",
+    "dia"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hi",
+    "deer"
+   ]
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di",
+    "di ya",
+    "di"
+   ]
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dia",
+    "di",
+    "di ya",
+    "di"
+   ]
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey",
+    "hey dee"
+   ]
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hey d ya",
+     "check": "hey did you eat",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey d ya",
+    "hey dee"
+   ]
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the ya",
+    "the ya hey",
+    "the ya"
+   ]
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the ya",
+    "the ya hey",
+    "the ya"
+   ]
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey di ya",
+     "check": "hey go",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di ya",
+    "hey dia"
+   ]
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey di ya",
+     "check": "hey giggle",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di ya",
+    "hey"
+   ]
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "hi"
+   ]
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "hi"
+   ]
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the",
+    "the ya",
+    "the dia"
+   ]
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "hey"
+   ]
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey prior",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey prior",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey ya",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.0,
+     "cand": "hey deer",
+     "check": "haydn s",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey d ya",
+     "check": "hayden ash",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey d ya"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey what's up",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey dia",
+     "check": "hated what's that",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey dia",
+     "check": "hi daddy come here",
+     "wake": false
+    },
+    {
+     "t": 4.4,
+     "cand": "hey deer",
+     "check": "come here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia",
+    "hey dia d ya",
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey dia",
+     "check": "hi daddy",
+     "wake": false
+    },
+    {
+     "t": 3.4,
+     "cand": "hi deer",
+     "check": "daddy come here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey dia",
+    "hey",
+    "hi",
+    "hi hey",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi how was your day",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer",
+    "di",
+    "di ya",
+    "di"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi how was your day",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer",
+    "di",
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey ya",
+     "check": "hey listen",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey ya",
+     "check": "hey listen",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dee",
+    "dee d ya"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dee",
+    "d ya",
+    "hey"
+   ]
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey",
+    "deer"
+   ]
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.2,
+     "cand": "hey dia",
+     "check": "hey he was there",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey di",
+    "hey dia"
+   ]
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "gtts-uk",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.2,
+     "cand": "hey hi the ya",
+     "check": "hey he was there",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey hi",
+    "hey hi the ya"
+   ]
+  },
+  {
+   "text": "Hey Diya",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hey Diya.",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hi Diya",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi d ya",
+     "check": "hi there your",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi d ya"
+   ]
+  },
+  {
+   "text": "Hey Diya, what's the time?",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hey Diya, set a timer",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dia",
+    "di ya",
+    "di ya hi",
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hey, Diya",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hey Diya, kal ka mausam batao",
+   "positive": true,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di ya"
+   ]
+  },
+  {
+   "text": "Hey there, how are you?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "What is the idea?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "Hello dear friend",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the"
+   ]
+  },
+  {
+   "text": "I went to India yesterday",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya"
+   ]
+  },
+  {
+   "text": "Please pass the water",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey, did you eat?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "They are here now",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Good morning everyone",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Give me a good idea",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey Siri",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey Google",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Alexa, play music",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya"
+   ]
+  },
+  {
+   "text": "Light the diya for Diwali",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di ya"
+   ]
+  },
+  {
+   "text": "The dog is in the garden",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "the",
+    "the ya",
+    "the"
+   ]
+  },
+  {
+   "text": "Can you hear me?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "d ya"
+   ]
+  },
+  {
+   "text": "Hey Priya",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey Riya",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey Dinesh",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.0,
+     "cand": "hey di ya",
+     "check": "either",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey di ya"
+   ]
+  },
+  {
+   "text": "Hey dude, what's up?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey daddy, come here",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hi Diana",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 1.8,
+     "cand": "hi dia",
+     "check": "hi diana",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi dia"
+   ]
+  },
+  {
+   "text": "Hi dear, how was your day?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi dia",
+     "check": "hi there how was your day",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi dia",
+    "ya",
+    "di",
+    "di ya",
+    "ya"
+   ]
+  },
+  {
+   "text": "Hey yaar, listen",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 1.8,
+     "cand": "hey ya",
+     "check": "her yard",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey ya"
+   ]
+  },
+  {
+   "text": "Did you see the new movie?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "dia",
+    "d ya",
+    "dia",
+    "d ya",
+    "dee"
+   ]
+  },
+  {
+   "text": "Dear sir, thank you",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "Hey, who is there?",
+   "positive": false,
+   "voice": "espeak-us",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": []
+  },
+  {
+   "text": "हे दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey beer",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "हे दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "हे दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hey deer",
+     "check": "here",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "हे दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hey deer",
+     "check": "hey we're",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hey",
+    "hey deer"
+   ]
+  },
+  {
+   "text": "हाय दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "हाय दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 0.85,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "hi",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "हाय दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 1.2,
+   "noise": false,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.5,
+     "cand": "hi deer",
+     "check": "hi dear",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  },
+  {
+   "text": "हाय दिया",
+   "positive": true,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": true,
+   "events": [
+    {
+     "t": 2.2,
+     "cand": "hi the ya",
+     "check": "hi",
+     "wake": true
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi the ya"
+   ]
+  },
+  {
+   "text": "आज मौसम कैसा है",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hi",
+    "di"
+   ]
+  },
+  {
+   "text": "आज मौसम कैसा है",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "di",
+    "di ya",
+    "di"
+   ]
+  },
+  {
+   "text": "क्या हाल है",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "ya hey",
+    "ya hi",
+    "ya hi hey"
+   ]
+  },
+  {
+   "text": "क्या हाल है",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "ya hey",
+    "ya hi",
+    "ya hi hey"
+   ]
+  },
+  {
+   "text": "दीया जलाओ",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer"
+   ]
+  },
+  {
+   "text": "दीया जलाओ",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "deer",
+    "ya"
+   ]
+  },
+  {
+   "text": "हे भगवान",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "हे भगवान",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "hey"
+   ]
+  },
+  {
+   "text": "अरे यार क्या कर रहा है",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "ya ya",
+    "hi"
+   ]
+  },
+  {
+   "text": "अरे यार क्या कर रहा है",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [],
+   "heard": [
+    "ya",
+    "ya ya",
+    "hi"
+   ]
+  },
+  {
+   "text": "हाय, कैसे हो",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": false,
+   "woke": false,
+   "events": [
+    {
+     "t": 3.2,
+     "cand": "hi ya",
+     "check": "i guess a whore",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi hey",
+    "hi hey hey",
+    "hi ya"
+   ]
+  },
+  {
+   "text": "हाय, कैसे हो",
+   "positive": false,
+   "voice": "gtts-hi",
+   "tempo": 1.0,
+   "noise": true,
+   "woke": false,
+   "events": [
+    {
+     "t": 2.7,
+     "cand": "hi deer",
+     "check": "hi jesse home",
+     "wake": false
+    }
+   ],
+   "heard": [
+    "hi",
+    "hi deer"
+   ]
+  }
+ ],
+ "streams": [
+  {
+   "voice": "gtts-in",
+   "seconds": 38,
+   "false_wakes": [],
+   "vetoed": [
+    {
+     "t": 9.4,
+     "cand": "hi dee hi deer",
+     "check": "she said the idea of a trip to india",
+     "wake": false
+    },
+    {
+     "t": 12.8,
+     "cand": "hey deer",
+     "check": "hello dear the teaser",
+     "wake": false
+    },
+    {
+     "t": 14.7,
+     "cand": "hi deer",
+     "check": "he's ready they are here now",
+     "wake": false
+    },
+    {
+     "t": 16.6,
+     "cand": "hi the ya",
+     "check": "now please open the door",
+     "wake": false
+    },
+    {
+     "t": 18.1,
+     "cand": "hey dia",
+     "check": "the door hey they're nice too",
+     "wake": false
+    },
+    {
+     "t": 19.3,
+     "cand": "hi d ya",
+     "check": "they're nice to see you with us",
+     "wake": false
+    },
+    {
+     "t": 34.4,
+     "cand": "the ya ya hey the ya",
+     "check": "can you hear the music",
+     "wake": false
+    },
+    {
+     "t": 36.3,
+     "cand": "hi the ya",
+     "check": "quick let's light the here for the",
+     "wake": false
+    }
+   ]
+  },
+  {
+   "voice": "gtts-us",
+   "seconds": 35,
+   "false_wakes": [],
+   "vetoed": [
+    {
+     "t": 5.8,
+     "cand": "hey hey deer",
+     "check": "hey did you call your mother",
+     "wake": false
+    },
+    {
+     "t": 8.7,
+     "cand": "hi the hi deer",
+     "check": "she said the idea of a trip to india",
+     "wake": false
+    },
+    {
+     "t": 11.8,
+     "cand": "hey deer",
+     "check": "hello dear the cheese",
+     "wake": false
+    },
+    {
+     "t": 16.9,
+     "cand": "the dia hey dia",
+     "check": "the door hey they're nice to see",
+     "wake": false
+    },
+    {
+     "t": 17.6,
+     "cand": "hi d ya",
+     "check": "hey they're nice to see you",
+     "wake": false
+    },
+    {
+     "t": 28.9,
+     "cand": "hey di ya",
+     "check": "is very hard today hey google",
+     "wake": false
+    },
+    {
+     "t": 29.6,
+     "cand": "hey ya",
+     "check": "but today hey google is not on the",
+     "wake": false
+    },
+    {
+     "t": 31.8,
+     "cand": "hi ya",
+     "check": "the on this phone can you hear the music",
+     "wake": false
+    }
+   ]
+  },
+  {
+   "voice": "gtts-hi",
+   "seconds": 13,
+   "false_wakes": [],
+   "vetoed": [
+    {
+     "t": 12.6,
+     "cand": "hey ya",
+     "check": "the valley high hall",
+     "wake": false
+    }
+   ]
+  }
+ ]
+}
