@@ -105,6 +105,11 @@ class DiagnosticsActivity : AppCompatActivity() {
             appendLine("Display over apps: ${Perms.overlay(this@DiagnosticsActivity)}")
             appendLine("Unrestricted battery: ${Perms.unrestrictedBattery(this@DiagnosticsActivity)}")
             appendLine()
+            CrashLog.last(this@DiagnosticsActivity)?.let {
+                appendLine("LAST CRASH:")
+                appendLine(it.take(3000))
+                appendLine()
+            }
             appendLine("Recent events:")
             val log = DiyaLog.all()
             if (log.isEmpty()) appendLine("(none yet — turn Diya on and try talking)")

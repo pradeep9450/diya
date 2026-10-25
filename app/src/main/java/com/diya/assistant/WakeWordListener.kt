@@ -92,6 +92,7 @@ class WakeWordListener(
                     lastShown = text
                     main.post { onHeard(text) }
                 }
+                if (isFinal && text.isNotBlank()) DiyaLog.add("wake", "heard \"$text\"")
                 if (verifyAt < 0 && WakeWord.candidate(text, rules, extra)) {
                     candidateText = text
                     verifyAt = samples + RATE * rules.verifyDelayMs / 1000

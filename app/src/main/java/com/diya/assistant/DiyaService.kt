@@ -330,6 +330,7 @@ class DiyaService : Service() {
     }
 
     private fun handleCommand(text: String, fromVoice: Boolean) {
+        DiyaLog.add("heard", (if (fromVoice) "voice: " else "typed: ") + text)
         busy = true
         wake?.stop()
         commands.cancel()
@@ -350,6 +351,7 @@ class DiyaService : Service() {
                 DiyaLog.add("brain", "error: ${e.javaClass.simpleName} ${e.message}")
                 Reply(r("Sorry, something went wrong.", "माफ़ कीजिए, कुछ गड़बड़ हो गई।"))
             }
+            DiyaLog.add("reply", reply.speech.take(120))
             if (reply.speech.isNotBlank()) {
                 DiyaBus.addChat(fromUser = false, text = reply.speech)
                 say(reply.speech)

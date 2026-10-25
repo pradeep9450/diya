@@ -24,10 +24,12 @@ class CommandListener(private val context: Context) {
     private var finished = true
     private val main = Handler(Looper.getMainLooper())
     private var watchdog: Runnable? = null
+    /** Each listen() call gets a new id, so timers from an old attempt can't cancel a new one. */
+    private var session = 0
 
     fun isAvailable(): Boolean = SpeechRecognizer.isRecognitionAvailable(context)
 
-    /** Google's recognizer if installed, otherwise the phone's default. */
+    /** Google's recognizer if installed (shown in Diagnostics only). */
     fun preferredService(): ComponentName? = runCatching {
         @Suppress("DEPRECATION")
         val services = context.packageManager.queryIntentServices(Intent(RecognitionService.SERVICE_INTERFACE), 0)
@@ -45,10 +47,9 @@ class CommandListener(private val context: Context) {
         onFail: (reason: ListenFail, spoke: Boolean, code: Int) -> Unit,
     ) {
         cancel()
-        val service = preferredService()
+        // The phone's default recognizer (what worked in build 2). Forcing a specific one broke some phones.
         val r = try {
-            if (service != null) SpeechRecognizer.createSpeechRecognizer(context, service)
-            else SpeechRecognizer.createSpeechRecognizer(context)
+            SpeechRecognizer.createSpeechRecognizer(context)
         } catch (e: Exception) {
             DiyaLog.add("speech", "couldn't create recognizer: ${e.message}")
             onFail(ListenFail.OTHER, false, -1)
@@ -56,6 +57,7 @@ class CommandListener(private val context: Context) {
         }
         recognizer = r
         finished = false
+        val mySession = ++session
         var spoke = false
         var ready = false
         var lastPartial = ""
@@ -63,6 +65,7 @@ class CommandListener(private val context: Context) {
         fun arm(ms: Long, reason: ListenFail) {
             watchdog?.let { main.removeCallbacks(it) }
             val w = Runnable {
+                if (mySession != session) return@Runnable
                 // If we already heard words, use them instead of failing.
                 if (lastPartial.isNotBlank()) finish { onResult(lastPartial) }
                 else finish { onFail(reason, spoke, -2) }
@@ -134,7 +137,6 @@ class CommandListener(private val context: Context) {
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
             putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, context.packageName)
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1500L)
         }
         try {
             r.startListening(intent)
@@ -143,10 +145,11 @@ class CommandListener(private val context: Context) {
             return
         }
         // Some recognizers never answer at all; don't wait forever.
-        main.postDelayed({ if (!finished && !ready) arm(0, ListenFail.STUCK) }, 4_000)
+        main.postDelayed({ if (mySession == session && !finished && !ready) arm(0, ListenFail.STUCK) }, 4_000)
     }
 
     fun cancel() {
+        session++
         finished = true
         watchdog?.let { main.removeCallbacks(it) }
         watchdog = null
