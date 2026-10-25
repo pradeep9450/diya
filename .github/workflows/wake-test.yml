@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - "ci/**"
-      - "app/src/main/assets/wake_grammar.json"
+      - "app/src/main/assets/wake_rules.json"
       - ".github/workflows/wake-test.yml"
   workflow_dispatch:
 
@@ -30,7 +30,7 @@ jobs:
           curl -sSL -o model.zip https://alphacephei.com/vosk/models/vosk-model-small-en-in-0.4.zip
           unzip -q model.zip && mv vosk-model-small-en-in-0.4 model
       - name: Run test
-        run: python ci/wake_test.py model results.json app/src/main/assets/wake_grammar.json
+        run: python ci/wake_test.py model results.json app/src/main/assets/wake_rules.json
       - name: Save results to ci-results branch
         run: |
           mkdir out && cp results.json out/ && cd out

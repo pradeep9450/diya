@@ -4,6 +4,7 @@ name: Build Diya APK
 
 on:
   push:
+    branches: [main]
     paths-ignore:
       - "ci/**"
       - ".github/workflows/wake-test.yml"
