@@ -15,16 +15,15 @@ RATE = 16000
 
 def norm(t): return re.sub(r"\s+", " ", re.sub(r"[^a-z' ]", " ", t.lower().replace("[unk]", " "))).strip()
 BLOCK = re.compile(RULES["block"])
+CONFIRM = re.compile(RULES["confirm"])
 GRAMMAR = [norm(g) for g in RULES["grammar"]]
 def candidate(t):
     p = " " + norm(t) + " "
     return any(" " + g + " " in p for g in GRAMMAR)
 def vetoed(t):
+    """Mirror of WakeWord.vetoed: wake only if the check confirms a Diya-like phrase."""
     t = norm(t)
-    if not t: return False
-    if BLOCK.search(t): return True
-    if RULES.get("blockHelloOnly", True) and re.search(r"\bhello\b", t) and not re.search(r"\b(hey|hi)\b", t): return True
-    return False
+    return not CONFIRM.search(t) or bool(BLOCK.search(t))
 
 model = Model(MODEL)
 GJSON = json.dumps(GRAMMAR + ["[unk]"])
@@ -89,7 +88,7 @@ def to16k(src, dst, tempo=1.0, noise=False, pad=True):
     if not pad: return dst
     padded = dst.replace(".wav", "_p.wav")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", dst, "-af",
-                    "adelay=600|600,apad=pad_dur=0.8", "-ac", "1", "-ar", "16000", padded], check=True)
+                    "adelay=600|600,apad=pad_dur=2.0", "-ac", "1", "-ar", "16000", padded], check=True)
     return padded
 
 POSITIVE = ["Hey Diya", "Hey Diya.", "Hi Diya", "Hey Diya, what's the time?", "Hey Diya, set a timer", "Hey, Diya",
