@@ -11,6 +11,11 @@ since() { diya_log | tail -n +$((MARK+1)); }
 wait_for() {  # wait_for <regex> <seconds>
   for i in $(seq 1 $2); do since | grep -qE "$1" && return 0; sleep 1; done; return 1; }
 say() { log "speaking: $1"; paplay -d vmic voice/$1.wav; }
+# Audio check: is the host microphone reaching the emulator?
+audio_check() {
+  log "audio check: pulse sources: $(pactl list short sources | tr '\n' ' ')"
+  log "audio check: emulator clients: $(pactl list short clients | grep -i -c qemu) qemu, $(pactl list short source-outputs | wc -l) recording streams"
+}
 check() {  # check <name> <regex> <seconds>
   if wait_for "$2" $3; then log "PASS $1"; else log "FAIL $1"; fi
   since | sed 's/^/      /' | tee -a $OUT/steps.txt; }
@@ -34,6 +39,7 @@ adb shell am start -n $PKG/.MainActivity
 check "service starts and wake word ready" "\[wake\] ready" 120
 snap 1-ready
 
+audio_check
 log "TEST 1: wake word, then a command"
 mark; sleep 2
 say hey_diya

@@ -36,6 +36,7 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq pulseaudio pulseaudio-utils ffmpeg > /dev/null
           pulseaudio -D --exit-idle-time=-1 --disallow-exit
           sleep 2
+          pactl load-module module-native-protocol-unix socket=/tmp/pulse.sock auth-anonymous=1
           pactl load-module module-null-sink sink_name=vmic sink_properties=device.description=VirtualMic
           pactl load-module module-null-sink sink_name=spk sink_properties=device.description=Speaker
           pactl set-default-source vmic.monitor
@@ -49,6 +50,9 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - name: Run on emulator
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          PULSE_SERVER: unix:/tmp/pulse.sock
+          QEMU_AUDIO_DRV: pa
         with:
           api-level: 34
           target: google_apis_playstore
